@@ -1,24 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Home from './components/Home/Home';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import Profile from './components/Profile/Profile';
+import AddMyDay from './components/AddMyDay/AddMyDay';
+import DayDetails from './components/DayDetails/DayDetails';
+import FindDay from './components/FindDay/FindDay';
+import EditDay from './components/EditDay/EditDay';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import AuthProvider from './components/context/AuthProvider';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <PrivateRoute path="/add">
+            <AddMyDay />
+          </PrivateRoute>
+          <Route path="/find">
+            <FindDay />
+          </Route>
+          <Route path="/edit/:id">
+            <EditDay />
+          </Route>
+          <Route path="/day/:id">
+            <DayDetails />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+        </Switch>
+      </Router>
+    </AuthProvider>
   );
 }
 
